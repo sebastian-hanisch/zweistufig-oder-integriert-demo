@@ -1,0 +1,3 @@
+-r requirements.txt
+pytest>=8.0
+scikit-learn>=1.3   # nur für die Gegenproben der Orakel-Tests (Kern-Ridge, Quantilregression); nicht zur Laufzeit

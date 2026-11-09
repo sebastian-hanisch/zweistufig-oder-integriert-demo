@@ -1,0 +1,24 @@
+Teil A: relative Lücke Δ / z* (Median über 20 Welten; je Welt 2000 Testpunkte)
+ Grad | Anteil <= 1 % | Anteil <= 2 % | Anteil <= 5 % | Anteil <= 10 % | Anteil <= 20 % | Anteil = 0 | Quantile 10/50/90 %
+    1 |        85.4 % |        97.6 % |       100.0 % |       100.0 % |       100.0 % |      0.0 % | 0.05 / 0.36 / 1.20
+    2 |        66.8 % |        89.1 % |        99.7 % |       100.0 % |       100.0 % |      0.0 % | 0.09 / 0.62 / 2.07
+    4 |        53.6 % |        76.4 % |        96.6 % |        99.7 % |       100.0 % |      0.0 % | 0.14 / 0.89 / 3.24
+    6 |        50.7 % |        71.3 % |        92.2 % |        98.3 % |        99.9 % |      0.0 % | 0.13 / 0.98 / 4.40
+Teil B: je Drittel der Testfälle (nach relativer Lücke: unteres, mittleres, oberes), n = 1000
+--- Grad 4, Rauschen 0.0: Median der Lücke je Drittel 0.23 % / 0.87 % / 2.49 %
+       kq: Fehlgriff je Drittel  58.4 % /  41.6 % /  20.4 % | Regret je Fall  0.54 % /  0.68 % /  0.69 % | Anteil am Regret   29 % /   36 % /   35 % | Fehlgriff unten > oben in 20 von 20 Seeds
+      spo: Fehlgriff je Drittel  42.1 % /  17.1 % /   4.4 % | Regret je Fall  0.20 % /  0.22 % /  0.13 % | Anteil am Regret   37 % /   38 % /   24 % | Fehlgriff unten > oben in 20 von 20 Seeds
+     kern: Fehlgriff je Drittel   9.4 % /   0.3 % /   0.0 % | Regret je Fall  0.01 % /  0.00 % / -0.00 % | Anteil am Regret   86 % /   14 % /   -0 % | Fehlgriff unten > oben in 20 von 20 Seeds
+--- Grad 4, Rauschen 0.5: Median der Lücke je Drittel 0.23 % / 0.87 % / 2.49 %
+       kq: Fehlgriff je Drittel  61.2 % /  43.7 % /  23.0 % | Regret je Fall  0.66 % /  0.79 % /  0.83 % | Anteil am Regret   30 % /   36 % /   35 % | Fehlgriff unten > oben in 20 von 20 Seeds
+      spo: Fehlgriff je Drittel  60.0 % /  43.1 % /  21.0 % | Regret je Fall  0.57 % /  0.68 % /  0.70 % | Anteil am Regret   27 % /   36 % /   36 % | Fehlgriff unten > oben in 20 von 20 Seeds
+     kern: Fehlgriff je Drittel  55.7 % /  33.9 % /  10.5 % | Regret je Fall  0.49 % /  0.50 % /  0.34 % | Anteil am Regret   35 % /   40 % /   27 % | Fehlgriff unten > oben in 20 von 20 Seeds
+--- Grad 6, Rauschen 0.0: Median der Lücke je Drittel 0.23 % / 0.97 % / 3.06 %
+       kq: Fehlgriff je Drittel  65.7 % /  54.5 % /  35.9 % | Regret je Fall  1.28 % /  1.72 % /  2.41 % | Anteil am Regret   24 % /   32 % /   44 % | Fehlgriff unten > oben in 20 von 20 Seeds
+      spo: Fehlgriff je Drittel  50.4 % /  28.2 % /  11.6 % | Regret je Fall  0.39 % /  0.45 % /  0.50 % | Anteil am Regret   26 % /   35 % /   37 % | Fehlgriff unten > oben in 20 von 20 Seeds
+     kern: Fehlgriff je Drittel  32.5 % /   3.6 % /   0.3 % | Regret je Fall  0.13 % /  0.04 % /  0.01 % | Anteil am Regret   73 % /   22 % /    4 % | Fehlgriff unten > oben in 20 von 20 Seeds
+--- Grad 6, Rauschen 0.5: Median der Lücke je Drittel 0.23 % / 0.97 % / 3.06 %
+       kq: Fehlgriff je Drittel  67.4 % /  55.7 % /  38.0 % | Regret je Fall  1.36 % /  1.82 % /  2.58 % | Anteil am Regret   23 % /   32 % /   44 % | Fehlgriff unten > oben in 20 von 20 Seeds
+      spo: Fehlgriff je Drittel  64.4 % /  51.8 % /  28.4 % | Regret je Fall  0.93 % /  1.27 % /  1.68 % | Anteil am Regret   23 % /   32 % /   42 % | Fehlgriff unten > oben in 20 von 20 Seeds
+     kern: Fehlgriff je Drittel  74.6 % /  55.4 % /  21.8 % | Regret je Fall  1.37 % /  1.27 % /  1.02 % | Anteil am Regret   38 % /   36 % /   27 % | Fehlgriff unten > oben in 20 von 20 Seeds
+Laufzeit 67 s
