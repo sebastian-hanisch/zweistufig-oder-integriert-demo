@@ -1,7 +1,6 @@
 # Zweistufig oder integriert: auf die Modellklasse kommt es an – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-zweistufig-oder-integriert-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-zweistufig-oder-integriert-demo.streamlit.app/)**
 
 Demo der Reihe **Entscheidungsorientiertes Lernen** in der „Konzepte“-Reihe für die Website „Sebastian Hanisch – Operations Research und Machine Learning“. Sie baut auf `newsvendor-direkt-demo` (direkt auf den Kosten lernen) und `spo-kuerzester-weg-demo` (SPO+ im Gitter) auf und stellt die Frage, die beide offen lassen: **Wann gewinnt welcher Weg?** Vehikel ist dasselbe abstrakte **5 × 5 Gitter** wie dort (Wege von links oben nach rechts unten, 40 Bögen, 70 Wege) und, als zweite, kleinere Welt, der **Newsvendor mit Merkmalen**. Verglichen werden drei Wege, aus Merkmalen eine Entscheidung zu machen: **zweistufig** (erst die Kosten schätzen, dann den Löser fragen; im Text ETO nach „estimate, then optimize“), **auf der Entscheidung trainiert** (SPO+, der Löser läuft im Training) und **gewichtete Stichprobe** (ohne Modell).
 
