@@ -85,7 +85,7 @@ with st.expander("So ist der Vergleich aufgebaut", expanded=True):
 1. **Dieselbe Welt, dieselben Daten.** Aus fünf Merkmalen sind die Kosten der 40 Bögen vorherzusagen; die Wahrheit ist ein Polynom vom Grad 1 (linear) bis 6, dazu optional multiplikatives Rauschen. Ein exakter Löser (Rückwärtsrechnung, das Gitter ist azyklisch) wählt aus den vorhergesagten Kosten den Weg; bewertet wird er mit den wahren Kosten (**Regret**).
 2. **Drei Sorten, zwei Klassen.** **KQ** und **SPO+** benutzen dasselbe *lineare* Modell mit 240 Parametern (KQ minimiert den Fehler der Kosten, SPO+ den Regret mit dem Löser in jeder Trainingsrunde). **Kern-ETO** ist zweistufig mit einer *flexiblen* Klasse (Gauß-Kern-Ridge, Bandbreite und Strafe per Validierung); der Löser kommt im Training nicht vor.
 3. **Das Orakel** kennt die mittleren Kosten und zeigt, wie viel Regret unvermeidbar ist (Rauschen).
-4. **Median über 20 feste Zufalls-Seeds**, nie ein einzelner Seed als Befund. Der **Zufallswald** ist eine eingefrorene Vormessung mit scikit-learn (nicht live).
+4. **Median über 20 feste Zufalls-Seeds**, nie ein einzelner Seed als Befund. Der **Random Forest** ist eine eingefrorene Vormessung mit scikit-learn (nicht live).
         """
     )
 
@@ -154,7 +154,7 @@ st.subheader("🔬 Experiment 1: drei Sorten, ein Gitter")
 st.markdown(
     f"KQ (linear, zweistufig), SPO+ (linear, auf der Entscheidung) und Kern-ETO (flexibel, zweistufig) auf derselben Welt: Grad {int(deg)}, Rauschstufe {de(noise)}, n = {int(n)}. "
     f"Balken: **Median über {seeds1} Zufalls-Seeds**, Linie: Spanne von Minimum bis Maximum. Das **Orakel** zeigt den unvermeidbaren Teil. "
-    "Der **Zufallswald** ist eine eingefrorene Vormessung mit scikit-learn und steht nur dort, wo sie gerechnet wurde (n = 100, 1000, 5000)."
+    "Der **Random Forest** ist eine eingefrorene Vormessung mit scikit-learn und steht nur dort, wo sie gerechnet wurde (n = 100, 1000, 5000)."
 )
 st.plotly_chart(build_class_figure(rows1), width="stretch", key="class_chart")
 table1 = pd.DataFrame([
@@ -241,7 +241,7 @@ st.subheader("🔬 Experiment 4: Newsvendor in der falschen Klasse")
 st.markdown(
     "Dieselbe Frage in der kleinsten Welt: Nachfrage $D = \\max(0, \\mu(x) + 8z)$ mit drei Merkmalen, bestellt wird das $\\tau$-Quantil. In der **linearen** Welt trifft die lineare Klasse die Wahrheit, in der **quadratischen** "
     "($\\mu$ enthält $8\\,(x_1^2 - 1)$) nicht. Verglichen werden die zweistufige Regel in der linearen Klasse (KQ + empirisches Quantil), das direkte Lernen auf den Kosten in **derselben** Klasse (Quantilregression) "
-    "und die gewichtete Stichprobe (kNN-, Kern- und Zufallswald-Gewichte, ohne Modell). Mehr dazu in der Demo „Gewichtete Stichprobe“ derselben Reihe."
+    "und die gewichtete Stichprobe (kNN-, Kern- und Random Forest-Gewichte, ohne Modell). Mehr dazu in der Demo „Gewichtete Stichprobe“ derselben Reihe."
 )
 e1, e2, e3 = st.columns(3)
 with e1:
@@ -263,7 +263,7 @@ kind, text = verdict_news(str(nkind), int(nn_), float(ntau), rows4)
 getattr(st, kind)(text)
 st.caption(
     f"Mehrkosten = Kosten der Regel minus Kosten des Orakels (wahres Quantil), in Prozent der Orakelkosten, exakt über die Nachfrage gerechnet. Eigene Messung: 20 Zufalls-Seeds (0 bis 19); die Spalte „Diese Instanz“ gehört zum Zufalls-Seed {int(seed)} der Seitenleiste "
-    f"(gewähltes k = {live4['k']}, Bandbreite {de(live4['h'], 2)}). Der Zufallswald ist eine Vormessung mit scikit-learn (30 Seeds, 5000 Testfälle, 50 Bäume) und nicht live."
+    f"(gewähltes k = {live4['k']}, Bandbreite {de(live4['h'], 2)}). Der Random Forest ist eine Vormessung mit scikit-learn (30 Seeds, 5000 Testfälle, 50 Bäume) und nicht live."
 )
 
 st.markdown("---")
@@ -298,7 +298,7 @@ st.markdown(
 | Annahme | Was passiert, wenn sie verletzt ist |
 |---|---|
 | **Eine Familie von Welten** | Nur dieses 5 × 5 Gitter mit dieser Kostenformel (Grad 1, 2, 4, 6), Rauschstufe 0 und 0,5, fünf Merkmale; im Newsvendor nur zwei Welten, drei Merkmale, drei Werte von τ. Aussagen über andere Gitter, Wahrheiten, Rauschen oder Löser sind nicht gemessen. |
-| **Die Klasse „flexibel“ ist ein Gauß-Kern-Ridge** | Kern-ETO ist ein bestimmter flexibler Lerner mit einem festen Raster für Bandbreite und Strafe, kein Maßstab für „flexible Klassen“. Andere Lerner (Wälder, Netze) sind nur als Vormessung des Zufallswaldes ohne Abstimmung dabei. |
+| **Die Klasse „flexibel“ ist ein Gauß-Kern-Ridge** | Kern-ETO ist ein bestimmter flexibler Lerner mit einem festen Raster für Bandbreite und Strafe, kein Maßstab für „flexible Klassen“. Andere Lerner (Wälder, Netze) sind nur als Vormessung des Random Forests ohne Abstimmung dabei. |
 | **Genug Daten für die Klasse** | Grad 6, Rauschstufe 0,5, n = 100: Median-Regret KQ {de(_cell_small['summary']['regret_kq']['median'])} %, SPO+ {de(_cell_small['summary']['regret_spo']['median'])} %, Kern-ETO {de(_cell_small['summary']['regret_kern']['median'])} % in den 20 Seeds; in den {_stab_n} weiteren Seeds liegt SPO+ in {int(np.sum(_stab_sp < _stab_kq))} und Kern-ETO in {int(np.sum(_stab_ke < _stab_kq))} Seeds unter KQ. |
 | **Wohlspezifikation lässt sich nicht beweisen** | Bei Grad 1 ohne Rauschen und n = 1000 liegt KQ bei {de(_cell_lin['summary']['regret_kq']['median'])} %; in echten Daten kennt man die Form nicht. Die Demo kann nur zeigen, was passiert, wenn man sie kennt. |
 | **Raten** | Die schnellen Raten der Theorie gelten asymptotisch und unter Zusatzbedingungen; hier wird weder $\\alpha$ geschätzt noch die Konvergenzgeschwindigkeit gemessen. |

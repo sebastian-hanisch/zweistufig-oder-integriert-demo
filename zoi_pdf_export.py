@@ -49,6 +49,6 @@ def build_pdf(settings: Settings, run) -> bytes:
     pdf.multi_cell(0, 5, _s(text.replace("**", "")), new_x="LMARGIN", new_y="NEXT")
     pdf.ln(3)
     pdf.set_font("Helvetica", "I", 8)
-    pdf.multi_cell(0, 4, _s("Zweistufig oder integriert: KQ, SPO+ und Kern-ETO im Gitter. Zufallswald: Vormessung mit scikit-learn, nicht live. Quelle: zweistufig-oder-integriert-demo, Sebastian Hanisch."),
+    pdf.multi_cell(0, 4, _s("Zweistufig oder integriert: KQ, SPO+ und Kern-ETO im Gitter. Random Forest: Vormessung mit scikit-learn, nicht live. Quelle: zweistufig-oder-integriert-demo, Sebastian Hanisch."),
                    new_x="LMARGIN", new_y="NEXT")
     return bytes(pdf.output())

@@ -47,7 +47,7 @@ class SplitMix64:
 
 
 def derive_seed(seed: int, tag: int) -> int:
-    """Unabhängiger Teilstrom: der erste Ausgabewert eines SplitMix64, dessen Zustand aus (Seed, Etikett) gemischt ist.
+    """Unabhängiger Teilstrom: der erste Ausgabewert eines SplitMix64, dessen Zustand aus (Seed, Label) gemischt ist.
 
     Damit bekommen Gewichtsmatrix, Trainingsdaten und Testdaten einer Welt getrennte Ströme aus einem einzigen Zufalls-Seed."""
     mixed = (int(seed) * _GAMMA + int(tag) * _M1 + 0x1234567) & _MASK

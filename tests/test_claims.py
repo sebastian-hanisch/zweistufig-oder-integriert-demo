@@ -4,7 +4,7 @@ Zahlen-Tabelle der README -> Test:
 
 | README | Test |
 |---|---|
-| alle erzeugten Tabellen (Raster ohne und mit Rauschen, Stabilitätsprobe, Zufallswald, Kern-Ridge der Vormessung, Lücke, Newsvendor) | `test_readme_contains_every_generated_table_line` (wörtlich aus den JSON-Dateien erzeugt) |
+| alle erzeugten Tabellen (Raster ohne und mit Rauschen, Stabilitätsprobe, Random Forest, Kern-Ridge der Vormessung, Lücke, Newsvendor) | `test_readme_contains_every_generated_table_line` (wörtlich aus den JSON-Dateien erzeugt) |
 | Messung dieser Demo (Seeds, Schritte, Lernrate, Zellen) | `test_band_file_describes_the_documented_setup` |
 | Klasse passt (Grad 1) | `test_class_fits_the_linear_truth` |
 | Klasse passt nicht, ohne Rauschen (Grad 4 und 6) | `test_wrong_class_without_noise` |
@@ -197,7 +197,7 @@ def test_frozen_pre_measurements_hold_the_numbers_of_the_raw_outputs():
     v = B.vormessung()
     assert "out_eo_v1_sp.txt" in v["quelle"] and "out_eo_v3_gewichtet.txt" in v["quelle"] and "scikit-learn" in v["hinweis"]
     assert (len(v["gitter_wald"]), len(v["gitter_kern"]), len(v["news"])) == (24, 6, 24)
-    # V1: Zufallswald, Zellen Grad 6 (Spot-Check gegen die Rohausgabe)
+    # V1: Random Forest, Zellen Grad 6 (Spot-Check gegen die Rohausgabe)
     cells = {(c["deg"], c["n"], c["noise"]): c for c in v["gitter_wald"]}
     c = cells[(6, 5000, 0.5)]
     assert (c["regret_kq"]["median"], c["regret_spo600"]["median"], c["regret_wald"]["median"]) == (12.2, 11.6, 11.5)

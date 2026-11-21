@@ -14,7 +14,7 @@ Regeln (jede liefert eine Bestellmenge je Testfall; kritisches Verhältnis tau =
 * `knn`     gewichtete Stichprobe mit den k nächsten Nachbarn, k per Leave-one-out,
 * `kern`    gewichtete Stichprobe mit Gauß-Kerngewichten, Bandbreite per Leave-one-out.
 
-Zufallswald-Gewichte werden hier NICHT gerechnet (kein scikit-learn zur Laufzeit); ihre Zahlen stehen nur als eingefrorene Vormessung in `zoi_vormessung.json`.
+Random Forest-Gewichte werden hier NICHT gerechnet (kein scikit-learn zur Laufzeit); ihre Zahlen stehen nur als eingefrorene Vormessung in `zoi_vormessung.json`.
 
 Die Kosten einer Regel werden exakt als Erwartung über die Nachfrage gerechnet (geschlossene Formel der gestutzten Normalverteilung) und über einen festen Testsatz von Merkmalen
 gemittelt; es gibt kein Rauschen der Nachfrage im Test. Mehrkosten = (Kosten der Regel - Kosten des Orakels) / Kosten des Orakels in Prozent.

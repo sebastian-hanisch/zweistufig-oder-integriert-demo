@@ -10,7 +10,7 @@ from zoi_evaluation import de, de_pct
 _LOCK = dict(fixedrange=True)
 _COLORS = {"orakel": C.COLOR_ORACLE, "kq": C.COLOR_KQ, "spo": C.COLOR_SPO, "kern": C.COLOR_KERN, "wald": C.COLOR_WALD,
            "kq_emp": C.COLOR_KQEMP, "direkt": C.COLOR_DIRECT, "knn": C.COLOR_KNN}
-_SHORT = {"orakel": "Orakel", "kq": "KQ", "spo": "SPO+", "kern": "Kern-ETO", "wald": "Zufallswald (Vormessung)"}
+_SHORT = {"orakel": "Orakel", "kq": "KQ", "spo": "SPO+", "kern": "Kern-ETO", "wald": "Random Forest (Vormessung)"}
 
 
 def _lock(fig: go.Figure) -> go.Figure:

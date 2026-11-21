@@ -29,7 +29,7 @@ def cell(deg: int, n: int, noise: float) -> dict:
 
 
 def wald_cell(deg: int, n: int, noise: float) -> dict | None:
-    """Zelle der Vormessung (Zufallswald, KQ, SPO+ mit 600 Schritten); None, wo die Vormessung nicht gerechnet hat (n = 300)."""
+    """Zelle der Vormessung (Random Forest, KQ, SPO+ mit 600 Schritten); None, wo die Vormessung nicht gerechnet hat (n = 300)."""
     for c in vormessung()["gitter_wald"]:
         if (c["deg"], c["n"], c["noise"]) == (deg, n, noise):
             return c

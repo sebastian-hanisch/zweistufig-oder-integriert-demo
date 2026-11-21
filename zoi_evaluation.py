@@ -59,14 +59,14 @@ METHOD_NAMES = {
     "kq": "KQ (linear, zweistufig)",
     "spo": "SPO+ (linear, Löser im Training)",
     "kern": "Kern-ETO (flexibel, zweistufig)",
-    "wald": "Zufallswald (nicht live)",
+    "wald": "Random Forest (nicht live)",
 }
 
 
 # --- Experiment 1: drei Klassen, ein Gitter ------------------------------------------------------------------------------------------------
 
 def class_rows(deg: int, n: int, noise: float) -> list[dict]:
-    """Zeilen für eine Zelle: Orakel, KQ, SPO+, Kern-ETO (eigene Messung, Kern-ETO nur bis n = 1000) und Zufallswald (Vormessung, nur n = 100 / 1000 / 5000)."""
+    """Zeilen für eine Zelle: Orakel, KQ, SPO+, Kern-ETO (eigene Messung, Kern-ETO nur bis n = 1000) und Random Forest (Vormessung, nur n = 100 / 1000 / 5000)."""
     c = B.cell(deg, n, noise)
     s = c["summary"]
     rows = [

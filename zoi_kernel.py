@@ -28,7 +28,7 @@ from zoi_rng import SplitMix64, derive_seed
 GAMMAS = (0.02, 0.05, 0.1, 0.3)
 ALPHAS = (0.001, 0.01, 0.1, 1.0)
 VALID_SHARE = 0.8     # Anteil der Trainingsfälle, auf dem je Paar angepasst wird
-TAG_SPLIT = 4         # Etikett des Teilstroms für den Validierungsschnitt (1 bis 3 sind Gewichte, Training, Test)
+TAG_SPLIT = 4         # Label des Teilstroms für den Validierungsschnitt (1 bis 3 sind Gewichte, Training, Test)
 
 
 def rbf_kernel(A: np.ndarray, B: np.ndarray, gamma: float) -> np.ndarray:

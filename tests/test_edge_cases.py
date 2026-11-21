@@ -102,5 +102,5 @@ def test_settings_at_the_slider_corners_give_complete_tables():
         assert [(r["n"], r["noise"]) for r in rows] == [(n, e) for e in NOISE_CHOICES for n in N_BAND]
     for n in (100, 1000):
         assert [r["key"] for r in ev.class_rows(6, n, 0.5)] == ["orakel", "kq", "spo", "kern", "wald"]
-    assert [r["key"] for r in ev.class_rows(6, 300, 0.5)] == ["orakel", "kq", "spo", "kern"]      # bei n = 300 gibt es keinen Zufallswald der Vormessung
+    assert [r["key"] for r in ev.class_rows(6, 300, 0.5)] == ["orakel", "kq", "spo", "kern"]      # bei n = 300 gibt es keinen Random Forest der Vormessung
     assert [r["key"] for r in ev.class_rows(6, 5000, 0.5)] == ["orakel", "kq", "spo", "wald"]    # bei n = 5000 keinen Kern-ETO

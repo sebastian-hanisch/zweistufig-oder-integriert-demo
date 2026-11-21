@@ -45,8 +45,8 @@ def stability_table() -> list[str]:
 
 
 def forest_table() -> list[str]:
-    """Vormessung (scikit-learn, nicht live): Zufallswald, KQ und SPO+ (600 Schritte) zu Grad 6; n = 100 / 1000 / 5000."""
-    lines = ["| n | Rauschstufe | Zufallswald | KQ | SPO+ (600 Schritte) |", "|---|---|---|---|---|"]
+    """Vormessung (scikit-learn, nicht live): Random Forest, KQ und SPO+ (600 Schritte) zu Grad 6; n = 100 / 1000 / 5000."""
+    lines = ["| n | Rauschstufe | Random Forest | KQ | SPO+ (600 Schritte) |", "|---|---|---|---|---|"]
     for noise in C.NOISE_CHOICES:
         for n in (100, 1000, 5000):
             w = B.wald_cell(6, n, noise)

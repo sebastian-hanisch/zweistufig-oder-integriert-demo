@@ -69,7 +69,7 @@ def test_ranking_row_picks_the_smallest_shown_median_and_the_first_on_ties():
     def row(key, name, v):
         return {"key": key, "Verfahren": name, "regret": {"median": v, "min": v, "max": v}, "mse": 1.0}
 
-    rows = [row("orakel", "Orakel (x)", 0.0), row("kq", "KQ (linear, zweistufig)", 2.0), row("spo", "SPO+ (linear)", 0.5), row("kern", "Kern-ETO (flexibel)", 0.04), row("wald", "Zufallswald (x)", 0.0)]
+    rows = [row("orakel", "Orakel (x)", 0.0), row("kq", "KQ (linear, zweistufig)", 2.0), row("spo", "SPO+ (linear)", 0.5), row("kern", "Kern-ETO (flexibel)", 0.04), row("wald", "Random Forest (x)", 0.0)]
     assert ev.ranking_row(rows) == "Kern-ETO"
     rows[3] = row("kern", "Kern-ETO (flexibel)", 0.5)
     assert ev.ranking_row(rows) == "SPO+"          # Gleichstand SPO+ und Kern nach der Anzeige: SPO+ steht in der Reihenfolge vorn

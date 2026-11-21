@@ -37,7 +37,7 @@ Zwei Arbeiten, die ich im Volltext gelesen habe (Hu/Kallus/Mao, Elmachtoub/Lam/Z
 
 - **Auswertung.** Jede Zelle (Grad, n, Rauschstufe) läuft mit den festen Zufalls-Seeds 0 bis 19 und 1000 Testfällen; angegeben werden **Median und Spanne (Minimum bis Maximum)** über die Seeds, nie ein einzelner Seed. Die Bänder stehen vorgerechnet in `zoi_bands.json` und sind mit `python tools/measure_bands.py` reproduzierbar (einige Minuten mit zwei Prozessen; Zufall nur über den ganzzahligen SplitMix64 aus `zoi_rng.py`, nie Pythons `hash()`).
 - **Datenmengen.** n = 100, 300, 1000 mit allen drei Sorten; n = 5000 nur mit KQ und SPO+ (die Kernmatrix von 5000 × 5000 Zahlen ist für eine Demo zu groß, Kern-ETO fehlt dort und die App sagt es). Die Live-Rechnung der App geht bis n = 1000.
-- **Zufallswald nicht live.** Zufallswald-Zahlen stammen aus Vormessungen mit scikit-learn (Gitter: 100 Bäume, mindestens 5 Fälle je Blatt, nicht abgestimmt, 20 Seeds; Newsvendor: 50 Bäume, 30 Seeds, 5000 Testfälle als Monte-Carlo-Stichprobe), eingefroren in `zoi_vormessung.json` (`tools/freeze_vormessung.py`); scikit-learn gehört nicht zu den Laufzeit-Paketen. In der App und hier heißt das Verfahren „Zufallswald (Vormessung, nicht live)“. Die Vormessungen haben andere Zufallsquellen (ihre SPO+-Spalte benutzt 600 statt 300 Adam-Schritte): ihre Zahlen sind vergleichbar, nicht gleich.
+- **Random Forest nicht live.** Random Forest-Zahlen stammen aus Vormessungen mit scikit-learn (Gitter: 100 Bäume, mindestens 5 Fälle je Blatt, nicht abgestimmt, 20 Seeds; Newsvendor: 50 Bäume, 30 Seeds, 5000 Testfälle als Monte-Carlo-Stichprobe), eingefroren in `zoi_vormessung.json` (`tools/freeze_vormessung.py`); scikit-learn gehört nicht zu den Laufzeit-Paketen. In der App und hier heißt das Verfahren „Random Forest (Vormessung, nicht live)“. Die Vormessungen haben andere Zufallsquellen (ihre SPO+-Spalte benutzt 600 statt 300 Adam-Schritte): ihre Zahlen sind vergleichbar, nicht gleich.
 - **Vormessung V4 vor dem Bau von Experiment 3.** Vorab festgelegtes Kriterium (`tools/vormessung_v4.py`, Rohausgabe `tools/out_vormessung_v4.txt`): Experiment 3 lohnt sich, wenn (1) der Anteil der Fälle mit relativer Lücke bis 5 % bei Grad 6 zwischen 5 % und 95 % liegt und mindestens 2 Prozentpunkte vom Anteil bei Grad 1 entfernt ist und (2) in jeder Zelle mit Grad 4 und 6 sowie Rauschstufe 0 und 0,5 und für jedes der drei Verfahren der Anteil gewählter Nicht-Bestwege im untersten Drittel der Lücke in mindestens 90 % der Seeds größer ist als im obersten. Beides erfüllt (Teil A und B unten); Experiment 3 ist deshalb gebaut.
 - **Trainierte Zahlen sind plattformabhängig** (Adam, Gleitkomma, Löserentscheidungen bei knappen Unterschieden, Validierung). Die Tests prüfen sie deshalb nur als Bänder und Ungleichungen; exakt geprüft werden nur Rechnungen ohne Training.
 
@@ -172,11 +172,11 @@ Eigene Messung (20 Zufalls-Seeds 0 bis 19, drei Merkmale, 2000 feste Testmerkmal
 | linear | 0,3 % | 0,6 % | 9,3 % | 12,4 % |
 | quadratisch | 134,9 % | 136,5 % | 30,4 % | 29,7 % |
 
-### Vormessungen mit scikit-learn (nicht live): Zufallswald und Kern-Ridge im Gitter
+### Vormessungen mit scikit-learn (nicht live): Random Forest und Kern-Ridge im Gitter
 
-Zufallswald (Grad 6; Quelle `out_eo_v1_sp.txt`; SPO+ dort mit 600 Schritten):
+Random Forest (Grad 6; Quelle `out_eo_v1_sp.txt`; SPO+ dort mit 600 Schritten):
 
-| n | Rauschstufe | Zufallswald | KQ | SPO+ (600 Schritte) |
+| n | Rauschstufe | Random Forest | KQ | SPO+ (600 Schritte) |
 |---|---|---|---|---|
 | 100 | 0,0 | 5,4 % | 2,4 % | 1,3 % |
 | 1000 | 0,0 | 1,7 % | 1,9 % | 0,6 % |
@@ -185,7 +185,7 @@ Zufallswald (Grad 6; Quelle `out_eo_v1_sp.txt`; SPO+ dort mit 600 Schritten):
 | 1000 | 0,5 | 12,6 % | 12,5 % | 11,8 % |
 | 5000 | 0,5 | 11,5 % | 12,2 % | 11,6 % |
 
-Der Zufallswald ist unabgestimmt (100 Bäume, keine Wahl der Blattgröße); die Zahlen sind kein Urteil über Zufallswälder. Bei Grad 6, Rauschstufe 0,5 und n = 5000 sind Wald (11,5 %) und SPO+ der Vormessung (11,6 %) gleichauf, KQ liegt bei 12,2 %.
+Der Random Forest ist unabgestimmt (100 Bäume, keine Wahl der Blattgröße); die Zahlen sind kein Urteil über Random Forests. Bei Grad 6, Rauschstufe 0,5 und n = 5000 sind Wald (11,5 %) und SPO+ der Vormessung (11,6 %) gleichauf, KQ liegt bei 12,2 %.
 
 Kern-Ridge der Vormessung V1d (scikit-learn `KernelRidge`, `out_eo_v1d_kernel.txt`) neben dem Kern-ETO dieser Demo (numpy), Grad 6:
 
@@ -213,14 +213,14 @@ Die Abweichung zwischen beiden Kern-ETO-Spalten beträgt bis zu 0,45 Punkte (n =
 - **„Kern-ETO liegt in 5 von 6 Zellen vor SPO+“ (Plan, aus V1d, Grad 6):** in der eigenen Messung mit numpy-Kern-Ridge liegt er in 6 von 6 Zellen (n = 100 / 300 / 1000, Rauschstufe 0 und 0,5) im Median unter SPO+. Die Zelle n = 300 mit Rauschen war in V1d gleichauf (12,50 gegen 12,44 %); hier 12,3 gegen 12,6 % bei 13 von 20 Seeds mit Kern-ETO besser. Es gilt die neue Messung, die Unterschiede sind klein (Zählung 13 von 20).
 - **Exakt lineare, rauschfreie Welt:** Der Plan verlangt Regret 0 beziehungsweise unter 10⁻⁶ für KQ, SPO+ und Kern-ETO. Das gilt für KQ (unter 10⁻¹²). SPO+ und Kern-ETO liegen in einzelnen Läufen darüber (Vorversuch mit fünf Seeds und n = 100 / 200 / 1000, Scratch-Lauf, nicht im Test: Kern-ETO bis etwa 9·10⁻⁶, SPO+ bis etwa 2,4·10⁻⁴); im Test stehen deshalb Bänder (siehe „Prüfungen“).
 - **V4 gilt (Z2):** Experiment 3 bleibt. Die Lücke ist in dieser Welt in 51 % (Grad 6) bis 85 % (Grad 1) der Fälle kleiner als 1 % des besten Wertes (Schwelle willkürlich gewählt; bei Grad 1 zählen Gleichstände mit), der Fehlgriff nimmt mit der Lücke ab; die schnellen Raten sind damit **nicht** bestätigt, nur die Verteilung der Lücke gemessen.
-- **Kern-ETO bei n = 5000 nicht gerechnet** (Plan: Raster n = 100 / 300 / 1000 / 5000 für Experiment 2): bei n = 5000 gibt es nur KQ und SPO+ (und den Zufallswald der Vormessung).
+- **Kern-ETO bei n = 5000 nicht gerechnet** (Plan: Raster n = 100 / 300 / 1000 / 5000 für Experiment 2): bei n = 5000 gibt es nur KQ und SPO+ (und den Random Forest der Vormessung).
 - **Newsvendor-Zahlen weichen von der Vormessung ab** (Plan: direkt 136,5, KQ + empirisch 134,9, kNN 30,4, Wald 29,7 %): hier andere Seeds und exakte statt Stichproben-Kosten, gemessen 141,1 / 140,7 / 30,1 (Kerngewichte 28,7) in der quadratischen Welt; die Rangfolge ist dieselbe.
 
 ## Ehrliche Grenzen
 
 - **Eine Familie von Welten:** nur 5 × 5, nur diese Kostenformel (Grad 1, 2, 4, 6), Rauschstufe 0 und 0,5, fünf Merkmale, ein lineares Modell für KQ und SPO+, SPO+ mit Adam, fester Lernrate und 300 Schritten; im Newsvendor zwei Welten, drei Merkmale, drei Werte von τ. Aussagen über andere Gitter, Wahrheiten, Trainer oder Lernraten sind nicht gemessen.
 - **Das Gitter und die Kostenformel sind aus dem Gedächtnis nachgebaut**, nicht gegen den Primärtext geprüft. Elmachtoub und Grigas (Management Science 68(1), 2022) und Bertsimas und Kallus (Management Science 2020) habe ich nur auf der Ebene des Abstracts gelesen; Hu/Kallus/Mao und Elmachtoub/Lam/Zhang/Zhao im Volltext (Beweise und Anhänge nicht), Satznummern nach arXiv v3 beziehungsweise v4.
-- **„Flexible Klasse“ heißt hier Gauß-Kern-Ridge** mit einem festen Raster; andere flexible Lerner (Wälder, Netze) kommen nur als unabgestimmter Zufallswald der Vormessung vor. Dass die flexible Klasse gewinnt, gilt für diesen Lerner in diesen Welten.
+- **„Flexible Klasse“ heißt hier Gauß-Kern-Ridge** mit einem festen Raster; andere flexible Lerner (Wälder, Netze) kommen nur als unabgestimmter Random Forest der Vormessung vor. Dass die flexible Klasse gewinnt, gilt für diesen Lerner in diesen Welten.
 - **Wohlspezifikation im Sinne der Theorie ist nicht nachgebaut:** Grad 1 ist die lineare Wahrheit im Gitter, nicht die 31 Monome der Quelle; ETO ist hier ein Kostenmodell (Kleinste Quadrate), nicht die Maximum-Likelihood-Schätzung einer Verteilungsfamilie, SPO+ ist nicht IEO. Die Theorie wird eingeordnet, nicht geprüft; **die Raten werden nicht gemessen**, $\alpha$ nicht geschätzt.
 - **Die Lücke Δ ist relativ gemessen** (Anteil des besten Wertes); die Rauschbedingung der Theorie verwendet die absolute Lücke und eine Konstante. Die Verteilung gilt für diese Welt, nicht für „realistische“ Probleme.
 - **Zahlen sind trainiert, validiert und plattformabhängig.** Gemessen unter Windows; unter Linux (CI und Streamlit Cloud) können einzelne Werte um Zehntelpunkte abweichen. Die Tests prüfen Bänder und Ungleichungen.
@@ -277,7 +277,7 @@ Die Suite hat **234 Tests**.
 
 ## Bewusst nicht umgesetzt
 
-- **Zufallswald live:** braucht scikit-learn, das nicht zu den Laufzeit-Paketen gehört; die Zahlen sind eingefroren. Ein Wald in numpy ist nicht Teil der Demo.
+- **Random Forest live:** braucht scikit-learn, das nicht zu den Laufzeit-Paketen gehört; die Zahlen sind eingefroren. Ein Wald in numpy ist nicht Teil der Demo.
 - **Kern-ETO bei n = 5000** und weitere flexible Lerner (abgestimmte Wälder, Netze): nicht gerechnet.
 - **Messung der Raten** (Konvergenzgeschwindigkeit gegen n, Schätzung von α) und die Wohlspezifikation mit den 31 Monomen der Quelle: nicht nachgebaut.
 - **Andere Gittergrößen, andere Wahrheiten, Minibatches, Lernratenwahl, Strafe für SPO+:** nicht gemessen (siehe `spo-kuerzester-weg-demo` für Strafe und früher Abbruch).
